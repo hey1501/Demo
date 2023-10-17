@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("Clone Git Repository") {
             steps {
-                dir("C:/space/") { 
+                dir("C:/space") { 
                     git(
                         url: "https://github.com/hey1501/Demo.git",
                         branch: "main",
