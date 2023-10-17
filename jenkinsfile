@@ -6,8 +6,8 @@
             steps {
                 dir("c:/space") {
                     git(
-                        url: "https://github.com/ssbostan/neptune.git",
-                        branch: "master",
+                        url: "https://github.com/hey1501/Demo.git",
+                        branch: "main",
                         changelog: true,
                         poll: true
                     )
