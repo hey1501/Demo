@@ -1,23 +1,31 @@
-
 pipeline {
     agent any
     
     stages {
+        stage("Set Git Configurations") {
+            steps {
+                script {
+                    // Set Git configuration to add exception for C:/space directory
+                    bat(script: 'git config --global --add safe.directory C:/space', returnStatus: true)
+                }
+            }
+        }
+        
         stage("Clone Git Repository") {
             steps {
                 script {
                     // Check if the directory is a Git repository
                     def isGitRepo = fileExists("C:/space/.git")
-
+   
                     // If not a Git repository, initialize one
                     if (!isGitRepo) {
                         echo "Initializing Git repository..."
                         bat(script: 'git init C:/space', returnStatus: true)
                     }
-
-                    // Fetch the repository from GitHub
-                    bat(script: 'git -C C:/space pull https://github.com/hey1501/Demo.git main', returnStatus: true)
-
+   
+                    // Fetch the repository from GitHub without checking out files
+                    bat(script: 'git -C C:/space pull --no-checkout --no-perms https://github.com/hey1501/Demo.git main', returnStatus: true)
+   
                     // Check out the specified branch
                     bat(script: 'git -C C:/space checkout -f main', returnStatus: true)
                 }
@@ -26,3 +34,4 @@ pipeline {
         // Add more stages if needed
     }
 }
+
