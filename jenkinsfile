@@ -1,16 +1,20 @@
 pipeline {
     agent any
-
     stages {
         stage("Clone Git Repository") {
             steps {
-                dir("C:/space") { 
-                    git(
-                        url: "https://github.com/hey1501/Demo.git",
-                        branch: "main",
-                        changelog: true,
-                        poll: true
-                    )
+                dir("C:/space") {
+                    script {
+                        if (!fileExists(".git")) {
+                            gitInit()
+                        }
+                        git(
+                            url: "https://github.com/hey1501/Demo.git",
+                            branch: "main",
+                            changelog: true,
+                            poll: true
+                        )
+                    }
                 }
             }
         }
