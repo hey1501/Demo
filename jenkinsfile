@@ -1,18 +1,31 @@
-
-  pipeline {
+pipeline {
     agent any
+
     stages {
         stage("Clone Git Repository") {
             steps {
-                dir("c:/space") {
-                    git(
-                        url: "https://github.com/hey1501/Demo.git",
-                        branch: "main",
-                        changelog: true,
-                        poll: true
-                    )
+                dir("c:/space") { // Specify the correct directory path
+                    script {
+                        // Check if the directory is a Git repository
+                        def isGitRepo = fileExists(".git")
+
+                        // If not a Git repository, initialize one
+                        if (!isGitRepo) {
+                            echo "Initializing Git repository..."
+                            gitInit()
+                        }
+
+                        // Fetch the repository from GitHub
+                        git(
+                            url: "https://github.com/hey1501/Demo.git",
+                            branch: "main",
+                            changelog: true,
+                            poll: true
+                        )
+                    }
                 }
             }
         }
+        // Add more stages if needed
     }
 }
