@@ -6,6 +6,7 @@ pipeline {
             steps {
                 dir("C:/space/") { 
                     git(
+                        config --global --add safe.directory C:/space
                         url: "https://github.com/hey1501/Demo.git",
                         branch: "main",
                         changelog: true,
